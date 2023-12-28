@@ -1,3 +1,6 @@
 [submodule "gis/excercise1"]
 	path = gis/excercise1
 	url = git@github.com:Automating-GIS-processes-II-2023/exercise-1-Chaeguevara.git
+[submodule "gis/excercise2"]
+	path = gis/excercise2
+	url = git@github.com:Automating-GIS-processes-II-2023/exercise-2-Chaeguevara.git
