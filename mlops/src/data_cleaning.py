@@ -32,7 +32,7 @@ class DataPreProcessStrategy(DataStrategy):
                     "order_delivered_customer_date",
                     "order_estimated_delivery_date"
                 ],
-                axis =1
+                axis=1
             )
             data["product_weight_g"].fillna(data["product_weight_g"].median(),inplace=True)
             data["product_length_cm"].fillna(data["product_length_cm"].median(),inplace=True)
@@ -48,7 +48,7 @@ class DataPreProcessStrategy(DataStrategy):
             logging.error(f"Error in preprocessing data : {e}")
             raise e
 
-class DataDivicdeStrategy(DataStrategy):
+class DataDivideStrategy(DataStrategy):
     """
     Strategy for dividing data into train and test set
     """
@@ -63,7 +63,6 @@ class DataDivicdeStrategy(DataStrategy):
             y = data["review_score"]
             X_train, X_test, y_train, y_test = train_test_split(X,y, test_size =0.2, random_state=42)
             return X_train, X_test, y_train, y_test
-        
         except Exception as e:
             logging.error(f"Error in dividing data: {e}")
 
