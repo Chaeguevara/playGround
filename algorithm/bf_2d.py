@@ -1,12 +1,9 @@
 blocks = [i + 1 for i in range(5)]
-print(blocks)
+
 three_by_three = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-print(list(zip(*(three_by_three[0:2]))))
-print(three_by_three[2][1:])
+#print(list(zip(*(three_by_three[0:2]))))
 
-visited = {i: 0 for i in blocks}
 
-print(visited)
 
 
 def bf_search(cnt=0):
@@ -58,31 +55,6 @@ def bf_search(cnt=0):
 
     return
 
-
-def place_helper(i, j, cnt):
-    if cnt < 2:  # 1*1
-        raise ValueError("")
-    elif cnt == 4:  # 3*1
-        # check north
-        if i - 2 >= 0 and sum(list(zip(*three_by_three))[j]) == 0:
-            for k in range(i - 2, i + 1):
-                three_by_three[k][j] = blocks[cnt]
-
-        # check south
-        # check west
-        # check east
-    else:  # 2*1
-        # check north
-        # check south
-        # check west
-        # check east
-        pass
-
-    pass
-
-
-def remove_helper(i, j):
-    pass
 
 
 bf_search()
