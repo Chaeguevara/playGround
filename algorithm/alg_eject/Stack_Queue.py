@@ -69,6 +69,21 @@ class Static_Array:
         self.size -= 1
         return x
 
+class Linked_List_Node:
+    def __init__(self,x) -> None:
+        self.x:Any = x
+        self.next: Linked_List_Node | None = None
+
+    def later_node(self,i:int):
+        if i == 0:
+            return self
+        assert self.next
+        return self.next.later_node(i-1)
+
+class Array_Stack(Static_Array):
+    def __init__(self):
+        super().__init__()
+
 
 
 s_arr = Static_Array()
@@ -80,3 +95,7 @@ print(s_arr.delete_at(0))
 print(s_arr)
 print(f"{s_arr.delete_last()=}")
 print(s_arr)
+
+arr_stack = Array_Stack()
+arr_stack.build([1,2,3,4,5])
+print(arr_stack)
