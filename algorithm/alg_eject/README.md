@@ -3,7 +3,7 @@
 ## 참여자
 - [Chaeguevara](https://chaeguevara.pages.dev/)
 - [ArchiBastard](https://codebastardarch.pages.dev/)
-- [김치 프리미엄](https://prjef.tistory.com/)
+- [キムさん](https://prjef.tistory.com/)
 
 ## 알고리즘 히스토리
 - [Linked List](https://codebastardarch.pages.dev/Algorithm/LinkedList)
