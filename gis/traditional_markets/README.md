@@ -45,6 +45,7 @@
  - **GeoCoding** : SGIS의 Geocoding은 한계가 있습니다. 노량진 시장과 같이 모든 시설이 모인 곳에서 모든 점이 한곳에 모여있습니다. 이는 어느정도 구분해서 보여주는 네이버 지도와 차이점입니다. 해당 내용을 수정할 필요가 있습니다.
 ![노량진한점](./imgs/noryangone.png)
 ![노량진펼침](./imgs/noryangoneSpread.png)
+![네이버](./imgs/naverPoi.png)
 
 ### todo
 - [ ] 카테고리별 켜고 끄기 
