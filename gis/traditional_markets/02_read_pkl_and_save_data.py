@@ -75,7 +75,7 @@ if __name__ == "__main__":
         try:
             cur_df = df[i:i+interval]
             cur_df = cur_df.apply(lambda x: get_coordinate(x,access_key),axis=1)
-            cur_df.to_csv(f"./traditional_w_coordinate_{i}-{i+interval}.csv")
+            cur_df.to_csv(f"./data/traditional_w_coordinate_{i}-{i+interval}.csv")
         except ConnectionError as e:
             print(e)
             err_csv.write(str(i))
