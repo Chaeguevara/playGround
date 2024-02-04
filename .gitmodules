@@ -4,3 +4,6 @@
 [submodule "gis/excercise2"]
 	path = gis/excercise2
 	url = git@github.com:Automating-GIS-processes-II-2023/exercise-2-Chaeguevara.git
+[submodule "algorithm/alg_eject/eject"]
+	path = algorithm/alg_eject/eject
+	url = git@github.com:Chaeguevara/eject.git
