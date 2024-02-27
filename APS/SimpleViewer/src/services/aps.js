@@ -2,6 +2,7 @@ const fs = require("fs");
 const APS = require("forge-apis");
 const{APS_CLIENT_ID, APS_CLIENT_SECRET, APS_BUCKET} = require('../../config')
 let internalAuthClient = new APS.AuthClientTwoLegged(APS_CLIENT_ID, APS_CLIENT_SECRET, ['bucket:read', 'bucket:create', 'data:read', 'data:write', 'data:create'], true);
+let bucketAuthClient = new APS.AuthClientTwoLegged(APS_CLIENT_ID, APS_CLIENT_SECRET, ['bucket:read'], true);
 let publicAuthClient = new APS.AuthClientTwoLegged(APS_CLIENT_ID, APS_CLIENT_SECRET, ['viewables:read'], true);
 
 const service = module.exports = {};
@@ -12,6 +13,13 @@ service.getInternalToken = async () => {
     }
     return internalAuthClient.getCredentials();
 };
+
+service.getBucketReadToken = async () =>{
+    if(!bucketAuthClient.isAuthorized()){
+        await bucketAuthClient.authenticate();
+    }
+    return bucketAuthClient.getCredentials();
+}
 
 service.getPublicToken = async () => {
     if (!publicAuthClient.isAuthorized()) {
@@ -89,3 +97,17 @@ service.getManifest = async (urn)=>{
 };
 
 service.urnify = (id) => Buffer.from(id).toString('base64').replace(/=/g, '');
+
+service.getBucketKey = async () =>{
+    try{
+        const resp = await new APS.BucketsApi().getBuckets({},null, await service.getBucketReadToken())
+        return resp.body;
+    }catch(err){
+        if(err.response.status === 404){
+            return null;
+        }else{
+            throw err;
+        }
+    }
+
+}
