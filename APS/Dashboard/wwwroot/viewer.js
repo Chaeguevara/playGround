@@ -1,5 +1,7 @@
 /// import * as Autodesk from "@types/forge-viewer";
 import './extensions/LoggerExtension.js'
+import './extensions/SummaryExtension.js'
+import './extensions/HistogramExtension.js'
 
 async function getAccessToken(callback) {
     try {
@@ -20,7 +22,9 @@ export function initViewer(container) {
         Autodesk.Viewing.Initializer({ env: 'AutodeskProduction', getAccessToken }, function () {
             const config = {
                 extensions: ['Autodesk.DocumentBrowser',
-                    'LoggerExtension'
+                    'LoggerExtension',
+                    'SummaryExtension',
+                    'HistogramExtension'
                 ]
             };
             const viewer = new Autodesk.Viewing.GuiViewer3D(container, config);

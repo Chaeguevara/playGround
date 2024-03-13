@@ -16,6 +16,7 @@
     "forge-apis": "^0.9.1"
   },
   "devDependencies": {
-    "@types/forge-viewer": "^7.48.0"
+    "@types/forge-viewer": "^7.48.0",
+    "nodemon": "^3.1.0"
   }
 }
