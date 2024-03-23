@@ -5,7 +5,7 @@ export class HistogramPanel extends Autodesk.Viewing.UI.DockingPanel{
         this.container.style.left = (options.x || 0) + 'px'
         this.container.style.top = (options.y || 0) + 'px'
         this.container.style.width = (options.width || 500) + 'px'
-        this.container.style.height = (options.x || 400) + 'px'
+        this.container.style.height = (options.height || 400) + 'px'
         this.container.style.resize = 'none';
         this.chartType = options.chartType || 'bar';
         this.chart = this.createChart();
