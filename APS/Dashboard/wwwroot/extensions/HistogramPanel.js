@@ -32,6 +32,7 @@ export class HistogramPanel extends Autodesk.Viewing.UI.DockingPanel{
     }
 
     createChart(){
+        console.log(this.canvas.getContext('2d'))
         return new Chart(this.canvas.getContext('2d'),{
             type:this.chartType,
             data:{
@@ -50,10 +51,15 @@ export class HistogramPanel extends Autodesk.Viewing.UI.DockingPanel{
 
     async updateChart(model, propName){
         console.log(this.extension)
+        console.log(propName)
         const histogram = await this.extension.findPropertyValueOccurrences(model,propName);
         const propertyValues = Array.from(histogram.keys());
         this.chart.data.labels = propertyValues;
         const dataset = this.chart.data.datasets[0]
+        console.log(propertyValues)
+        console.log(propName)
+        console.log(propertyValues.map(val => histogram.get(val).length))
+
         dataset.label = propName;
         dataset.data = propertyValues.map(val => histogram.get(val).length);
         if(dataset.data.length > 0){

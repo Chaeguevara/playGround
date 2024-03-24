@@ -1,8 +1,9 @@
 /// import * as Autodesk from "@types/forge-viewer";
 import './extensions/LoggerExtension.js'
 import './extensions/SummaryExtension.js'
-import './extensions/HistogramExtension.js'
 import './extensions/DataGridExtension.js'
+import './extensions/ToasterUIExtension.js'
+import './extensions/HistogramExtension.js'
 
 async function getAccessToken(callback) {
     try {
@@ -25,8 +26,9 @@ export function initViewer(container) {
                 extensions: ['Autodesk.DocumentBrowser',
                     'LoggerExtension',
                     'SummaryExtension',
-                    'HistogramExtension',
-                    'DataGridExtension'
+                    'DataGridExtension',
+                    'ToasterExtension',
+                    'HistogramExtension'
                 ]
             };
             const viewer = new Autodesk.Viewing.GuiViewer3D(container, config);
@@ -40,6 +42,8 @@ export function initViewer(container) {
 export function loadModel(viewer, urn) {
     return new Promise(function (resolve, reject) {
         function onDocumentLoadSuccess(doc) {
+            console.log(doc)
+            console.log(doc.getRoot())
             resolve(viewer.loadDocumentNode(doc, doc.getRoot().getDefaultGeometry()));
         }
         function onDocumentLoadFailure(code, message, errors) {
