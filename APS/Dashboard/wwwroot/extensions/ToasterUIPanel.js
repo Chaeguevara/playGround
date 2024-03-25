@@ -76,7 +76,14 @@ export class ToasterUIPanel extends Autodesk.Viewing.UI.DockingPanel{
         // dataset.data = propertyValues.map(val => histogram.get(val).length);
         dataset.series = newData
         this.chart.setData(dataset)
+        console.log(this.chart)
         // this.chart.update();
+        this.chart.on('selectSeries', (info)=>{
+            console.log(info.bar);
+            const dbids = histogram.get(info.bar[0].data.label)
+            this.extension.viewer.isolate(dbids);
+            this.extension.viewer.fitToView(dbids);
+        })
 
         // this.chart.config.options.onClick = (ev,items) =>{
         //     if(items.length === 1){
