@@ -38,15 +38,6 @@ async function getVersions(hubId, projectId, itemId) {
     return versions.map(version => createTreeNode(`version|${version.id}`, version.attributes.createTime, 'icon-version'));
 }
 
-function markTree(node) {
-    if (!node) {
-        return
-    }
-
-    node.itree.state.checked = !node.itree.state.checked
-
-
-}
 
 export function initTree(selector, onSelectionChanged) {
     // See http://inspire-tree.com
@@ -69,21 +60,73 @@ export function initTree(selector, onSelectionChanged) {
             mode: 'checkbox'
         }
     });
-    tree.on('node.click', function (event, node) {
+    tree.on('node.click', async function (event, node) {
         event.preventTreeDefault();
+        let urnArr = []
+        const tokens = node.id.split('|');
+        if (tokens[0] === 'version') {
+            urnArr.push(tokens[1])
+        }
+        let idx = 0
+        let childNodes = await node.expand();
+        // iterate children while expanding it. w/o exapnding, impossible to get children info
+        while (idx < childNodes.length) {
+            console.log(childNodes.length)
+            const cur = childNodes.at(idx)
+            if (cur.children){
+                const curC = await cur.expand();
+                childNodes = [...childNodes, ...curC]
+            } else {
+                const tok = cur.id.split('|')
+                if (tok[0] === 'version') {
+                    urnArr.push(tok[1])
+                }
+            }
+            idx++;
+        }
+        // urn to show on view
+        console.log(urnArr)
         console.log('click')
         console.log(node)
-        if (node.itree.state.checked){
+        if (node.itree.state.checked) {
             node.uncheck(false)
-        }else{
+        } else {
             console.log("check")
             node.check(false)
         }
-        console.log(node.itree.state.checked)
-        const tokens = node.id.split('|');
-        if (tokens[0] === 'version') {
-            onSelectionChanged(tokens[1]);
+        // if (tokens[0] === 'version') {
+            // onSelectionChanged(tokens[1]);
+        // }
+        idx = 0
+        let filteredUrnArr = []
+        while (idx < urnArr.length){
+            const curV = urnArr.at(idx).split('=')[1]
+            filteredUrnArr.push(urnArr.at(idx))
+            idx += curV
         }
+        console.log(filteredUrnArr)
     });
-    return new InspireTreeDOM(tree, { target: selector });
+    const finalTree = new InspireTreeDOM(tree, { target: selector });
+    console.log(selector)
+    const parent = document.getElementById(selector.slice(1)).parentNode
+    const button = document.createElement("button")
+    button.setAttribute('content', 'submit')
+    button.textContent = 'Click to load model'
+    button.addEventListener('click', () => {
+        console.log('cliked')
+        console.log(tree)
+        // tree.expandDeep()
+        const tested = tree.filter(no => {
+            console.log(no)
+            return no.id.split('|')[0] === 'version'
+        })
+        const checkedNodes = tree.checked()
+        console.log(checkedNodes)
+        // const tested = tree.find((node)=>{
+        //     console.log(node)
+        //     node.id.split('|')[0]==='version'})
+        console.log(tested)
+    })
+    parent.appendChild(button)
+    return finalTree;
 }
