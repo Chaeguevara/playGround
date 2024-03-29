@@ -1,4 +1,4 @@
-import { initViewer, loadModel } from './viewer.js';
+import { initViewer, loadModel,loadModels } from './viewer.js';
 import { initTree } from './sidebar.js';
 
 const login = document.getElementById('login');
@@ -18,7 +18,8 @@ try {
             };
         }
         const viewer = await initViewer(document.getElementById('preview'));
-        const tree = initTree('#tree', (id) => loadModel(viewer, window.btoa(id).replace(/=/g, '')));
+        // const tree = initTree('#tree', (id) => loadModel(viewer, window.btoa(id).replace(/=/g, '')));
+        const tree = initTree('#tree', (urnArr) => loadModels(viewer, urnArr));
         console.log(tree)
     } else {
         login.innerText = 'Login';

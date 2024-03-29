@@ -64,6 +64,7 @@ export function initTree(selector, onSelectionChanged) {
         event.preventTreeDefault();
         let urnArr = []
         const tokens = node.id.split('|');
+        console.log(tokens[1])
         if (tokens[0] === 'version') {
             urnArr.push(tokens[1])
         }
@@ -73,7 +74,7 @@ export function initTree(selector, onSelectionChanged) {
         while (idx < childNodes.length) {
             console.log(childNodes.length)
             const cur = childNodes.at(idx)
-            if (cur.children){
+            if (cur.children) {
                 const curC = await cur.expand();
                 childNodes = [...childNodes, ...curC]
             } else {
@@ -83,6 +84,9 @@ export function initTree(selector, onSelectionChanged) {
                 }
             }
             idx++;
+        }
+        if (urnArr.length < 1){
+            throw new Error("No model under this tree")
         }
         // urn to show on view
         console.log(urnArr)
@@ -95,15 +99,18 @@ export function initTree(selector, onSelectionChanged) {
             node.check(false)
         }
         // if (tokens[0] === 'version') {
-            // onSelectionChanged(tokens[1]);
+        // onSelectionChanged(tokens[1]);
         // }
         idx = 0
         let filteredUrnArr = []
-        while (idx < urnArr.length){
+        while (idx < urnArr.length) {
             const curV = urnArr.at(idx).split('=')[1]
             filteredUrnArr.push(urnArr.at(idx))
             idx += curV
         }
+        console.log(filteredUrnArr)
+        filteredUrnArr = filteredUrnArr.map(urn => window.btoa(urn).replace(/=/g, ''))
+        onSelectionChanged(filteredUrnArr)
         console.log(filteredUrnArr)
     });
     const finalTree = new InspireTreeDOM(tree, { target: selector });

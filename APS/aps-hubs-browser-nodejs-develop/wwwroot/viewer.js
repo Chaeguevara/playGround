@@ -9,13 +9,13 @@ async function getAccessToken(callback) {
         callback(access_token, expires_in);
     } catch (err) {
         alert('Could not obtain access token. See the console for more details.');
-        console.error(err);        
+        console.error(err);
     }
 }
 
 export function initViewer(container) {
     return new Promise(function (resolve, reject) {
-            Autodesk.Viewing.Initializer({ env: 'AutodeskProduction', getAccessToken }, function () {
+        Autodesk.Viewing.Initializer({ env: 'AutodeskProduction', getAccessToken }, function () {
             const config = {
                 extensions: ['Autodesk.DocumentBrowser']
             };
@@ -36,4 +36,26 @@ export function loadModel(viewer, urn) {
         console.error(message);
     }
     Autodesk.Viewing.Document.load('urn:' + urn, onDocumentLoadSuccess, onDocumentLoadFailure);
+}
+
+export function loadModels(viewer, urnArr) {
+    function onDocumentLoadSuccess(doc) {
+        viewer.loadDocumentNode(doc, doc.getRoot().getDefaultGeometry(), {
+            keepCurrentModels: true,
+            preserveView: true,  // 2D drawings
+            modelSpace: true,    // 2D drawings
+            applyRefPoint: true, // 3D shared coordinates
+            applyScaling: 'm',   // force all models to same scale
+            placementTransform: (new THREE.Matrix4()).makeRotationX(-Math.PI/2),
+            globalOffset: { x: 0, y: 0, z: 0 },  // force all models to origin
+        });
+    }
+    function onDocumentLoadFailure(code, message) {
+        alert('Could not load model. See console for more details.');
+        console.error(message);
+    }
+    urnArr.map((m) => {
+        Autodesk.Viewing.Document.load(`urn:${m}`, onDocumentLoadSuccess, onDocumentLoadFailure);
+    })
+
 }
