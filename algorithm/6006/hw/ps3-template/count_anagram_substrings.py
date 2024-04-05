@@ -10,3 +10,15 @@ def count_anagram_substrings(T, S):
     # YOUR CODE HERE #
     ##################
     return tuple(A)
+
+def turn_string_into_base_ts(s:str) -> int: 
+    a = 0
+    for char in s:
+        print(ord(char)%97)
+        print(f"{a=}")
+        a += 10**(ord(char)%97)
+    return a
+
+test = turn_string_into_base_ts("abc")
+
+print(test)
