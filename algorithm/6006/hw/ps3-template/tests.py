@@ -52,4 +52,4 @@ class TestCases(unittest.TestCase):
     def test_05(self): self.assertTrue(check(tests[ 4]))
 
 if __name__ == '__main__':
-   res = unittest.main(verbosity = 3, exit = False)
+   res = unittest.main(verbosity = 4, exit = False)
