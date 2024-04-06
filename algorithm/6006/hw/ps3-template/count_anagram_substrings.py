@@ -1,7 +1,3 @@
-from ast import Dict
-import re
-
-
 def count_anagram_substrings(T, S):
     """
     Input:  T | String
