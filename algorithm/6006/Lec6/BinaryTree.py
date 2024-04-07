@@ -1,3 +1,6 @@
+from networkx import null_graph
+
+
 class Binary_Node:
     def __init__(A, x):
         A.item = x
@@ -31,6 +34,46 @@ class Binary_Node:
         while A.parent and (A.parent.right is A):
             A = A.parent
         return A.parent
+
+    def predecessor(A):
+        if A.left:
+            return A.left.subtree_last()
+        while A.parent and (A.parent.left is A):
+            A = A.parent
+        return A.parent
+
+    def subtree_insert_before(A, B):
+        if A.left:
+            A = A.left.subtree_last()
+            A.right, B.parent = B, A
+        else:
+            A.left, B.parent = B, A
+
+    def subtree_insert_after(A, B):
+        if A.right:
+            A = A.right.subtree_first()
+            A.left, B.parent = B, A
+        else:
+            A.right, B.parent = B, A
+
+    def delete(A):
+        if A.left or A.right:
+            if A.left:
+                B = A.predecessor()
+            else:
+                B = A.sucessor()
+            A.item, B.item = B.item ,A.item
+            return B.delete()
+        if A.parent:
+            if A.parent.left is A:
+                A.parent.left = None
+                A.parent = None
+            else:
+                A.parent.right = None
+                A.parent =None
+        return A
+
+
 
 
 A = [Binary_Node(i) for i in range(10)]
