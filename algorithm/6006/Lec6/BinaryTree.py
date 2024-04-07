@@ -1,4 +1,3 @@
-from networkx import null_graph
 
 
 class Binary_Node:
@@ -62,7 +61,7 @@ class Binary_Node:
                 B = A.predecessor()
             else:
                 B = A.sucessor()
-            A.item, B.item = B.item ,A.item
+            A.item, B.item = B.item, A.item
             return B.delete()
         if A.parent:
             if A.parent.left is A:
@@ -70,36 +69,43 @@ class Binary_Node:
                 A.parent = None
             else:
                 A.parent.right = None
-                A.parent =None
+                A.parent = None
         return A
 
 
+class Binary_tree:
+    def __init__(T, Node_Type=Binary_Node):
+        T.root = None
+        T.size = 0
+        T.Node_Type = Node_Type
 
+    def __len__(T):
+        return T.size
 
-A = [Binary_Node(i) for i in range(10)]
+    def __iter__(T):
+        if T.root:
+            for A in T.root.subtree_iter():
+                yield A.item
 
-right_node = None
-for i in range(5, len(A) - 2):
-    if right_node is None:
-        right_node = A[i]
-    cur = A[i]
-    cur.right = A[i + 1]
+    def build(T, X):
+        A = X[:] #copy
 
-left_node = None
-for i in range(3, 0, -1):
-    if left_node is None:
-        left_node = A[i]
-    cur = A[i]
-    cur.left = A[i - 1]
+        def build_subtree(A, i, j):
+            c = (i + j) // 2 #center index
+            root = T.Node_Type(A[c]) #init root
+            if i < c:
+                root.left = build_subtree(A, i, c - 1) #omit center
+                root.left.parent = root
+            if c < j:
+                root.right = build_subtree(A, c + 1, j) #omit center
+                root.right.parent = root
+            return root
 
+        T.root = build_subtree(A, 0, len(A) - 1)
 
-center = A[4]
-center.left = left_node
-center.right = right_node
-
-
-test = center.subtree_iter()
-for item in test:
-    print(item.item)
-
-print(center.right.subtree_last().item)
+A = [ x for x in range(10)]
+tree = Binary_tree()
+tree.build(A)
+print(f"{tree.root.item=}")
+for node in tree:
+    print(node)
