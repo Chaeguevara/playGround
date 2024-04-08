@@ -71,7 +71,7 @@ class Binary_Node:
         return A
 
 
-class Binary_tree:
+class Binary_Tree:
     def __init__(T, Node_Type=Binary_Node):
         T.root = None
         T.size = 0
@@ -152,11 +152,33 @@ class BST_Node(Binary_Node):
         else:
             A.item = B.item
 
+class Set_Binary_Tree(Binary_Tree):
+    def __init__(self):
+        super().__init__(BST_Node)
+
+    # iter
+
+    #build
+
+    # find min
+
+    # find max
+    
+    #find
+
+    #find next
+
+    # find_prev
+
+    # insert
+
+    #delete
+
 
 
 if __name__ == "__main__":
     A = [x for x in range(10)]
-    tree = Binary_tree()
+    tree = Binary_Tree()
     tree.build(A)
     print(f"{tree.root.item=}")
     for node in tree:
