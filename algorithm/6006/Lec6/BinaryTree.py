@@ -1,5 +1,3 @@
-
-
 class Binary_Node:
     def __init__(A, x):
         A.item = x
@@ -88,24 +86,25 @@ class Binary_tree:
                 yield A.item
 
     def build(T, X):
-        A = X[:] #copy
+        A = X[:]  # copy
 
         def build_subtree(A, i, j):
-            c = (i + j) // 2 #center index
-            root = T.Node_Type(A[c]) #init root
+            c = (i + j) // 2  # center index
+            root = T.Node_Type(A[c])  # init root
             if i < c:
-                root.left = build_subtree(A, i, c - 1) #omit center
+                root.left = build_subtree(A, i, c - 1)  # omit center
                 root.left.parent = root
             if c < j:
-                root.right = build_subtree(A, c + 1, j) #omit center
+                root.right = build_subtree(A, c + 1, j)  # omit center
                 root.right.parent = root
             return root
 
         T.root = build_subtree(A, 0, len(A) - 1)
 
+
 class BST_Node(Binary_Node):
-    def subtree_find(A,k):
-        if k <A.item.key:
+    def subtree_find(A, k):
+        if k < A.item.key:
             if A.left:
                 return A.left.subtree_find(k)
         elif k > A.item.key:
@@ -115,8 +114,48 @@ class BST_Node(Binary_Node):
             return A
         return None
 
-if __name__ =="__main__":
-    A = [ x for x in range(10)]
+    def subtree_find_next(A, k): #O(h)
+        if A.item.key <= k: # if k is bigger than cur node -> go right
+            if A.right: # check if there is right
+                return A.right.subtree_find_next(k) # now traverse in sub tree
+            else: # if no right, there can't be no next. which means bigger than cur 'k'
+                return None
+        elif A.left: # when the key is smaller than current node and check the left
+            B = A.left.subtree_find_next(k) #recurse in subtree
+            if B:
+                return B
+        return A
+    
+    def subtree_find_prev(A,k): # O(h). Equivalent pattern
+        if A.item.key >= k: # go to left
+            if A.left:
+                return A.left.subtree_find_prev(k)
+            else:
+                return None
+        elif A.right:
+            B = A.right.subtree_find_prev(k)
+            if B:
+                return B
+        return A
+
+    def subtree_insert(A,B):
+        if B.item.key < A.item.key: # to be inserted should be on the left
+            if A.left:
+                A.left.subtree_insert(B)
+            else:
+                A.subtree_insert_before(B)
+        elif B.item.key > A.item.key: # right is candidate
+            if A.right:
+                A.right.subtree_insert(B)
+            else:
+                A.subtree_insert_after(B)
+        else:
+            A.item = B.item
+
+
+
+if __name__ == "__main__":
+    A = [x for x in range(10)]
     tree = Binary_tree()
     tree.build(A)
     print(f"{tree.root.item=}")
