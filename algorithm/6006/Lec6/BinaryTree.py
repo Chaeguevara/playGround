@@ -161,18 +161,26 @@ class Set_Binary_Tree(Binary_Tree):
     #build
 
     # find min
+    ## hint: where is the smallest item in tree
 
-    # find max
+
+    # find max 
+    ## hint: where is the biggest item in tree
     
     #find
+    ## see BST_Node API
 
     #find next
+    ## see BST_Node API
 
     # find_prev
+    ## see BST_Node API
 
     # insert
+    ## see BST_Node API
 
     #delete
+    ## see BST_Node API
 
 
 
