@@ -103,9 +103,22 @@ class Binary_tree:
 
         T.root = build_subtree(A, 0, len(A) - 1)
 
-A = [ x for x in range(10)]
-tree = Binary_tree()
-tree.build(A)
-print(f"{tree.root.item=}")
-for node in tree:
-    print(node)
+class BST_Node(Binary_Node):
+    def subtree_find(A,k):
+        if k <A.item.key:
+            if A.left:
+                return A.left.subtree_find(k)
+        elif k > A.item.key:
+            if A.right:
+                return A.right.subtree_find(k)
+        else:
+            return A
+        return None
+
+if __name__ =="__main__":
+    A = [ x for x in range(10)]
+    tree = Binary_tree()
+    tree.build(A)
+    print(f"{tree.root.item=}")
+    for node in tree:
+        print(node)
