@@ -114,20 +114,20 @@ class BST_Node(Binary_Node):
             return A
         return None
 
-    def subtree_find_next(A, k): #O(h)
-        if A.item.key <= k: # if k is bigger than cur node -> go right
-            if A.right: # check if there is right
-                return A.right.subtree_find_next(k) # now traverse in sub tree
-            else: # if no right, there can't be no next. which means bigger than cur 'k'
+    def subtree_find_next(A, k):  # O(h)
+        if A.item.key <= k:  # if k is bigger than cur node -> go right
+            if A.right:  # check if there is right
+                return A.right.subtree_find_next(k)  # now traverse in sub tree
+            else:  # if no right, there can't be no next. which means bigger than cur 'k'
                 return None
-        elif A.left: # when the key is smaller than current node and check the left
-            B = A.left.subtree_find_next(k) #recurse in subtree
+        elif A.left:  # when the key is smaller than current node and check the left
+            B = A.left.subtree_find_next(k)  # recurse in subtree
             if B:
                 return B
         return A
-    
-    def subtree_find_prev(A,k): # O(h). Equivalent pattern
-        if A.item.key >= k: # go to left
+
+    def subtree_find_prev(A, k):  # O(h). Equivalent pattern
+        if A.item.key >= k:  # go to left
             if A.left:
                 return A.left.subtree_find_prev(k)
             else:
@@ -138,13 +138,13 @@ class BST_Node(Binary_Node):
                 return B
         return A
 
-    def subtree_insert(A,B):
-        if B.item.key < A.item.key: # to be inserted should be on the left
+    def subtree_insert(A, B):
+        if B.item.key < A.item.key:  # to be inserted should be on the left
             if A.left:
                 A.left.subtree_insert(B)
             else:
                 A.subtree_insert_before(B)
-        elif B.item.key > A.item.key: # right is candidate
+        elif B.item.key > A.item.key:  # right is candidate
             if A.right:
                 A.right.subtree_insert(B)
             else:
@@ -152,35 +152,80 @@ class BST_Node(Binary_Node):
         else:
             A.item = B.item
 
+
 class Set_Binary_Tree(Binary_Tree):
     def __init__(self):
         super().__init__(BST_Node)
 
     # iter
+    def iter_order(self):
+        yield from self
 
-    #build
+    # build
+    def build(self, X):
+        for x in X:
+            self.insert(x)
 
     # find min
     ## hint: where is the smallest item in tree
+    def find_min(self):
+        if self.root:
+            return self.root.subtree_first().item
 
-
-    # find max 
+    # find max
     ## hint: where is the biggest item in tree
-    
-    #find
-    ## see BST_Node API
+    def find_max(self):
+        if self.root:
+            return self.root.subtree_last().item
 
-    #find next
+    # find
     ## see BST_Node API
+    def find(self, x):
+        if self.root:
+            B = self.root.subtree_find(x)
+            if B:
+                return B.item
+
+    # find next
+    ## see BST_Node API
+    def find_next(self,x):
+        if self.root:
+            B = self.root.subtree_find_next(x)
+            if B:
+                return B.item
 
     # find_prev
     ## see BST_Node API
+    def find_prev(self,x):
+        if self.root:
+            B = self.root.subtree_find_prev(x)
+            if B:
+                return B.item
 
     # insert
     ## see BST_Node API
+    def insert(self,x):
+        new_node = self.Node_Type(x)
+        if self.root:
+            self.root.subtree(new_node)
+            if new_node.parent is None:
+                return False
+        else:
+            self.root = new_node
+        self.size += 1
+        return True
 
-    #delete
+    # delete
     ## see BST_Node API
+    def delete(self,x):
+        assert self.root
+        node = self.root.subtree_find(x)
+        assert node
+        ext = node.subtree_delete()
+        if ext.parent is None:
+            self.root = None
+        self.size -= 1
+        return ext.item
 
 
 
