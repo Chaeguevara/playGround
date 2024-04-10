@@ -1,9 +1,22 @@
+def height(A):
+    if A:
+        return A.height
+    else:
+        return -1
+
 class Binary_Node:
     def __init__(A, x):
         A.item = x
         A.left: Binary_Node | None = None
         A.right: Binary_Node | None = None
         A.parent: Binary_Node | None = None
+        A.subtree_update()
+
+    def subtree_update(A):
+        A.height = 1 + max(height(A.left),height(A.right))
+
+    def skew(A): #-1,0,1
+        return height(A.right) - height(A.left)
 
     def subtree_iter(A):
         # left -> self -> riggt 순서로 탐색을 진행함 O(n). 왜냐하면 모든 아이템을 탐색하게 됨
@@ -45,6 +58,7 @@ class Binary_Node:
             A.right, B.parent = B, A
         else:
             A.left, B.parent = B, A
+        A.maintain()
 
     def subtree_insert_after(A, B):
         if A.right:
@@ -52,6 +66,7 @@ class Binary_Node:
             A.left, B.parent = B, A
         else:
             A.right, B.parent = B, A
+        A.maintain()
 
     def delete(A):
         if A.left or A.right:
@@ -64,10 +79,9 @@ class Binary_Node:
         if A.parent:
             if A.parent.left is A:
                 A.parent.left = None
-                A.parent = None
             else:
                 A.parent.right = None
-                A.parent = None
+            A.parent.maintain()
         return A
 
 
