@@ -68,7 +68,7 @@ class Binary_Node:
             A.right, B.parent = B, A
         A.maintain()
 
-    def delete(A):
+    def subtree_delete(A):
         if A.left or A.right:
             if A.left:
                 B = A.predecessor()
@@ -83,6 +83,21 @@ class Binary_Node:
                 A.parent.right = None
             A.parent.maintain()
         return A
+
+    def subtree_rotate_right(D):
+        assert D.left
+        B, E = D.left, D.right
+        A,C = B.left, B.right
+        D,B = B,D
+        D.item, B.item = B.item, D.item
+        B.left, B.right = A,D
+        D.left, D.right = C,E
+        if A:
+            A.parent = B
+        if E:
+            E.parent = D
+        B.subtree_update()
+        D.subtree_update()
 
 
 class Binary_Tree:
