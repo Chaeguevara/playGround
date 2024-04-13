@@ -99,6 +99,36 @@ class Binary_Node:
         B.subtree_update()
         D.subtree_update()
 
+    def subtree_rotate_left(B):
+        assert B.right
+        A,D = B.left, B.right
+        C,E = D.left, D.right
+        B,D = D,B
+        B.item, D.item = D.item, B.item
+        D.left, D.right = B,E
+        B.left, B.right = A,C
+        if A:
+            A.parent = B
+        if E:
+            E.parent = D
+        B.subtree_update()
+        D.subtree_update()
+    
+    def rebalance(A):
+        if A.skew() == 2:
+            if A.right.skew() < 0:
+                A.right.subtree_rotate_right()
+            A.subtree_rotate_left()
+        elif A.skew() == -2:
+            if A.left.skew() > 0:
+                A.left.subtree_rotate_left()
+            A.subtree_rotate_right()
+
+    def maintain(A):
+        A.rebalance()
+        A.subtree_update()
+        if A.parent: A.parent.maintain()
+
 
 class Binary_Tree:
     def __init__(T, Node_Type=Binary_Node):
