@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
     "immer": "^10.0.4",
     "redux": "^5.0.1",
