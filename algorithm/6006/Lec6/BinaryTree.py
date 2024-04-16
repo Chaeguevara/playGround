@@ -1,9 +1,22 @@
+def height(A):
+    if A:
+        return A.height
+    else:
+        return -1
+
 class Binary_Node:
     def __init__(A, x):
         A.item = x
         A.left: Binary_Node | None = None
         A.right: Binary_Node | None = None
         A.parent: Binary_Node | None = None
+        A.subtree_update()
+
+    def subtree_update(A):
+        A.height = 1 + max(height(A.left),height(A.right))
+
+    def skew(A): #-1,0,1
+        return height(A.right) - height(A.left)
 
     def subtree_iter(A):
         # left -> self -> riggt 순서로 탐색을 진행함 O(n). 왜냐하면 모든 아이템을 탐색하게 됨
@@ -45,6 +58,7 @@ class Binary_Node:
             A.right, B.parent = B, A
         else:
             A.left, B.parent = B, A
+        A.maintain()
 
     def subtree_insert_after(A, B):
         if A.right:
@@ -52,8 +66,9 @@ class Binary_Node:
             A.left, B.parent = B, A
         else:
             A.right, B.parent = B, A
+        A.maintain()
 
-    def delete(A):
+    def subtree_delete(A):
         if A.left or A.right:
             if A.left:
                 B = A.predecessor()
@@ -64,11 +79,55 @@ class Binary_Node:
         if A.parent:
             if A.parent.left is A:
                 A.parent.left = None
-                A.parent = None
             else:
                 A.parent.right = None
-                A.parent = None
+            A.parent.maintain()
         return A
+
+    def subtree_rotate_right(D):
+        assert D.left
+        B, E = D.left, D.right
+        A,C = B.left, B.right
+        D,B = B,D
+        D.item, B.item = B.item, D.item
+        B.left, B.right = A,D
+        D.left, D.right = C,E
+        if A:
+            A.parent = B
+        if E:
+            E.parent = D
+        B.subtree_update()
+        D.subtree_update()
+
+    def subtree_rotate_left(B):
+        assert B.right
+        A,D = B.left, B.right
+        C,E = D.left, D.right
+        B,D = D,B
+        B.item, D.item = D.item, B.item
+        D.left, D.right = B,E
+        B.left, B.right = A,C
+        if A:
+            A.parent = B
+        if E:
+            E.parent = D
+        B.subtree_update()
+        D.subtree_update()
+    
+    def rebalance(A):
+        if A.skew() == 2:
+            if A.right.skew() < 0:
+                A.right.subtree_rotate_right()
+            A.subtree_rotate_left()
+        elif A.skew() == -2:
+            if A.left.skew() > 0:
+                A.left.subtree_rotate_left()
+            A.subtree_rotate_right()
+
+    def maintain(A):
+        A.rebalance()
+        A.subtree_update()
+        if A.parent: A.parent.maintain()
 
 
 class Binary_Tree:
