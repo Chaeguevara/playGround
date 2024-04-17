@@ -1,11 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { axios } from "axios";
+import axios from 'axios'
 
 
-const https = require('https')
-const httpsAgent = new https.Agent({
-    rejectUnauthorized: false
-})
 
 const initialState = {
     loading: false,
@@ -15,7 +11,7 @@ const initialState = {
 
 //Generated pending fullfilled and rejected action types
 export const fectchUsers = createAsyncThunk('user/fetchUsers', () => {
-    return axios.get('https://jsonplaceholder.typicode.com/users', { httpsAgent })
+    return axios.get('https://jsonplaceholder.typicode.com/users', )
         .then(response => response.data.map((user) => user.id))
 })
 

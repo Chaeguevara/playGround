@@ -1,8 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
 // const reduxLogger = require('redux-logger')
-const cakeReducer = require('../features/cake/cakeSlice')
-const icecreamReducer = require('../features/icecream/icecreamSlice')
-const userReducer = require('../features/user/userSlice')
+import cakeReducer from "../features/cake/cakeSlice"
+import icecreamReducer from "../features/icecream/icecreamSlice"
+import userReducer from "../features/user/userSlice"
+// const icecreamReducer = require('../features/icecream/icecreamSlice')
+// const userReducer = require('../features/user/userSlice')
 
 // const logger = reduxLogger.createLogger
 
