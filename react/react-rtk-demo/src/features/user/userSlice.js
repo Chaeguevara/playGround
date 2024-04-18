@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios'
+import https from "https"
 
 
 
@@ -12,7 +13,7 @@ const initialState = {
 //Generated pending fullfilled and rejected action types
 export const fectchUsers = createAsyncThunk('user/fetchUsers', () => {
     return axios.get('https://jsonplaceholder.typicode.com/users', )
-        .then(response => response.data.map((user) => user.id))
+        .then(response => response.data)
 })
 
 const userSlice = createSlice({
