@@ -63,6 +63,3 @@ def merge(L, R):
             s=s_
         M_.append((k,s,t))
     return M_
-
-
-    return
