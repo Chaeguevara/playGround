@@ -18,5 +18,14 @@ test_graph = [
     [0],
     [0]
 ]
-s = 0
-print(bfs(test_graph,s))
+
+def unweighted_shortest_path(Adj, s, t):
+    parent = bfs(Adj,s)
+    if parent[t] is None:
+        return None
+    i= t
+    path  = [t]
+    while i != s:
+        i = parent[i]
+        path.append(i)
+    return path[::-1]
