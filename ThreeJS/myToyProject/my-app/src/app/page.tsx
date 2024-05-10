@@ -1,5 +1,5 @@
 "use client"
-// import Image from "next/image";
+import Image from "next/image";
 import styles from "./page.module.css";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Suspense, useRef } from "react";
@@ -7,7 +7,7 @@ import { Preload, Image as ImageImpl } from "@react-three/drei";
 import { ScrollControls, useScroll } from "@react-three/drei";
 import * as THREE from "three";
 
-function Image(props) {
+function ImageLoader(props) {
   const ref = useRef()
   const group = useRef()
   const data = useScroll()
@@ -28,9 +28,9 @@ function Page({ m = 0.4, urls, ...props }) {
   const w = width < 10 ? 1.5 / 3 : 1 / 3
   return (
     <group {...props}>
-      <Image position={[-width * w, 0, -1]} scale={[width * w - m * 2, 5, 1]} url={urls[0]} />
-      <Image position={[0, 0, 0]} scale={[width * w - m * 2, 5, 1]} url={urls[1]} />
-      <Image position={[-width * w, 0, 1]} scale={[width * w - m * 2, 5, 1]} url={urls[2]} />
+      <ImageLoader position={[-width * w, 0, -1]} scale={[width * w - m * 2, 5, 1]} url={urls[0]} />
+      <ImageLoader position={[0, 0, 0]} scale={[width * w - m * 2, 5, 1]} url={urls[1]} />
+      <ImageLoader position={[-width * w, 0, 1]} scale={[width * w - m * 2, 5, 1]} url={urls[2]} />
     </group>
   )
 }
@@ -39,7 +39,7 @@ function Pages() {
   const { width } = useThree((state) => state.viewport)
   return (
     <>
-      <Page position={[-width * 1, 0, 0]} urls={['../../public/hi.jpeg']} />
+      <Page position={[-width * 1, 0, 0]} urls={['../../public/hi.jpeg','../../public/hi.jpeg','../../public/hi.jpeg']} />
 
     </>
   )
