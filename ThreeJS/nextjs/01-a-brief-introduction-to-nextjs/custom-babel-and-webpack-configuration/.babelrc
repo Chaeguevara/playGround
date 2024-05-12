@@ -1,0 +1,6 @@
+{
+  "presets": ["next/babel"], // barbel preset created by vercel team
+  "plugins": [
+    ["@babel/plugin-proposal-pipeline-operator", { "proposal": "fsharp" }]
+  ]
+}
