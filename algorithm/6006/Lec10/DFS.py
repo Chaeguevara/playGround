@@ -57,6 +57,16 @@ def dfs(Adj: list, s, parent=None, order=None):  # Adj adjacency list, s:start
     order.append(s)  # last node will come first O(1) amortized
     return parent, order
 
+def full_dfs(Adj):
+    parent = [None] * len(Adj) # O(V)
+    order=[] # O(1)
+    for v in range(len(Adj)): # O(V)
+        if parent[v] is None: # O(1)
+            parent[v] = v # O(1)
+            dfs(Adj,v,parent,order)
+    return parent,order
+
+print(f"{full_dfs(test_graph)=}")
 
 
 G.visualize() 
