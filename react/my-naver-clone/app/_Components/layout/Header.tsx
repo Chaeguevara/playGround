@@ -1,9 +1,13 @@
-export default function NavBar(){
-    return(
-        <div>
-            Nav bar
+import DropDown from "../Dropdown";
 
-        </div>
+export default function NavBar() {
+    return (
+        <>
+            <DropDown />
+            <div>
+                Nav bar
+            </div>
+        </>
     )
 
 
