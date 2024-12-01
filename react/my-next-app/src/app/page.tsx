@@ -1,12 +1,16 @@
 import Image from "next/image";
-import Search from "./ui/search";
+import Container from "@/app/_components/container";
+import { Intro } from "@/app/_components/intro";
 
 
 export default function Home() {
   return (
-    <>
-      <Search placeholder="hi" />
+    <main>
+      <Container>
+        <Intro/>
 
-    </>
+      </Container>
+
+    </main>
   );
 }
