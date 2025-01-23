@@ -65,3 +65,7 @@ export function initTree(selector, onSelectionChanged) {
     });
     return new InspireTreeDOM(tree, { target: selector });
 }
+
+export function initCost(selector){
+
+}

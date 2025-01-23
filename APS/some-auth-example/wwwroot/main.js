@@ -19,6 +19,7 @@ try {
         }
         const viewer = await initViewer(document.getElementById('preview'));
         initTree('#tree', (id) => loadModel(viewer, window.btoa(id).replace(/=/g, '')));
+        // initCost
     } else {
         login.innerText = 'Login';
         login.onclick = () => window.location.replace('/api/auth/login');

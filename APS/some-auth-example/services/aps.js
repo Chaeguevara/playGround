@@ -84,3 +84,26 @@ service.getItemVersions = async (projectId, itemId, accessToken) => {
     const resp = await dataManagementClient.getItemVersions(projectId, itemId, { accessToken });
     return resp.data;
 };
+
+/**
+ * Posts a new expense to the specified container.
+ * @param {string} containerId - The ID of the container (project) where the expense will be posted.
+ * @param {object} expenseData - The expense details to be posted.
+ * @param {string} accessToken - The access token for authentication.
+ * @returns {object} - The response from the ACC API.
+ */
+service.postExpense = async (containerId, expenseData, accessToken) => {
+    try {
+        const response = await dataManagementClient.post(`/cost/v1/containers/${containerId}/expenses`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(expenseData)
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error posting expense:', error);
+        throw error;
+    }
+};

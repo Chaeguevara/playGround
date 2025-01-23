@@ -5,6 +5,7 @@ let router = express.Router();
 
 router.get('/api/auth/login', function (req, res) {
     console.log('log in')
+    console.log(getAuthorizationUrl())
     res.redirect(getAuthorizationUrl());
 });
 
