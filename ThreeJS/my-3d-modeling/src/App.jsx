@@ -1,23 +1,18 @@
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Gallery from "./pages/Gallery";
+import ModelViewer from "./pages/ModelViewer";
 
-function Box() {
+function App() {
   return (
-    <mesh rotation={[0.4, 0.2, 0]}>
-      <boxGeometry />
-      <meshStandardMaterial color="hotpink" />
-    </mesh>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/gallery/:modelId" element={<ModelViewer />} />
+      </Routes>
+    </Router>
   );
 }
 
-export default function App() {
-  return (
-    <Canvas style={{ width: '100vw', height: '100vh' }}
-      camera={{ position: [2, 2, 5], fov: 50 }}>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 5, 5]} />
-      <Box />
-      <OrbitControls />
-    </Canvas>
-  );
-}
+export default App;
