@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 const models = [
   { id: "cube", name: "Cube" },
   { id: "tree", name: "Tree" },
+  { id: "rotatingBox", name: "RotatingBox" },
+  { id: "ridingBike", name: "Riding Bicycle" },
+  { id: "rideNewBike", name: "Riding New Bicycle" },
 ];
 
 export default function Gallery() {
