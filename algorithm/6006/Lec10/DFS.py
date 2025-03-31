@@ -93,6 +93,8 @@ full_scan_by_def = full_xxx_by_def(dfs)
 
 
 print(f"{full_dfs(test_graph)=}")
+print(type(full_scan_by_def))
+print(type(full_scan_by_lambda))
 print(f"{full_scan_by_lambda(test_graph)=}")
 print(f"{full_scan_by_def(test_graph)=}")
 

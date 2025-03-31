@@ -1,4 +1,3 @@
-from typing import OrderedDict
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -47,31 +46,44 @@ for i, item in enumerate(test_graph):
 
 
 def dfs(Adj: list, s, parent=None, order=None):  # Adj adjacency list, s:start
-    if parent is None:
-        parent = [None] * len(Adj)
-        parent[s] = s
-        order = []
-    for v in Adj[s]:
-        if parent[v] is None:
-            parent[v] = s
-            dfs(Adj,v,parent,order)
-    order.append(s)
-
+    if parent is None:  # O(1)
+        parent = [None] * len(Adj)  # O(v)
+        parent[s] = s  # O(1)
+        order = []  # O(1)
+    for v in Adj[s]:  # O(Adj[s])
+        if parent[v] is None:  # O(1)
+            parent[v] = s  # O(1)
+            dfs(Adj, v, parent, order)  # recursion
+    order.append(s)  # last node will come first O(1) amortized
     return parent, order
 
 
 def full_dfs(Adj):
-    parent = [None] * len(Adj)
-    order = []
-    for u in range(len(Adj)):
-        if parent[u] is None:
-            parent[u] = u
-            dfs(Adj,u,parent,order)
+    parent = [None] * len(Adj)  # O(V)
+    order = []  # O(1)
+    for v in range(len(Adj)):  # O(V)
+        if parent[v] is None:  # O(1)
+            parent[v] = v  # O(1)
+            dfs(Adj, v, parent, order)
     return parent, order
 
 
-print(f"{dfs(test_graph,0)=}")
-print(f"{full_dfs(test_graph)=}")
+def try_to_relax(Adj, w, d, parent, u, v):
+    if d[v] > d[u] + w(u, v):
+        d[v] = d[u] + w(u, v)
+        parent[v] = u
+
+
+def DAG_Relaxation(Adj, w, s):
+    _, order = dfs(Adj, s)
+    order.reverse()
+    d = [float("inf") for _ in Adj]
+    parent = [None for _ in Adj]
+    d[s], parent[s] = 0, s
+    for u in order: # loop through topo sorted vertices
+        for v in Adj[u]:
+            try_to_relax(Adj, w, d, parent, u, v)
+    return d, parent
 
 
 G.visualize()

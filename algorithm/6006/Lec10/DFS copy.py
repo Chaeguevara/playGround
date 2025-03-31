@@ -1,4 +1,4 @@
-from typing import OrderedDict
+from matplotlib.pylab import pareto
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -54,9 +54,8 @@ def dfs(Adj: list, s, parent=None, order=None):  # Adj adjacency list, s:start
     for v in Adj[s]:
         if parent[v] is None:
             parent[v] = s
-            dfs(Adj,v,parent,order)
+            dfs(Adj, v, parent, order)
     order.append(s)
-
     return parent, order
 
 
@@ -65,12 +64,10 @@ def full_dfs(Adj):
     order = []
     for u in range(len(Adj)):
         if parent[u] is None:
-            parent[u] = u
-            dfs(Adj,u,parent,order)
+            dfs(Adj, u, parent, order)
     return parent, order
 
 
-print(f"{dfs(test_graph,0)=}")
 print(f"{full_dfs(test_graph)=}")
 
 

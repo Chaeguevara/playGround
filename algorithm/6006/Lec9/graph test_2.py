@@ -1,4 +1,3 @@
-from typing import OrderedDict
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -29,49 +28,44 @@ class GraphVisualization:
         plt.show()
 
 
-# Driver code
 G = GraphVisualization()
 
-# test_graph = [
-#     [1],
-#     [0,2],
-#     [1,3,4],
-#     [2,5],
-#     [2,5],
-#     [3,4]
-# ]
-test_graph = [[1], [0, 2, 4], [1, 3], [2], [1]]
+test_graph = [[1], [0, 2], [1, 3, 4], [2, 5], [2, 5], [3, 4]]
+# visualize graph
 for i, item in enumerate(test_graph):
     for v in item:
         G.addEdge(i, v)
 
 
-def dfs(Adj: list, s, parent=None, order=None):  # Adj adjacency list, s:start
-    if parent is None:
-        parent = [None] * len(Adj)
-        parent[s] = s
-        order = []
-    for v in Adj[s]:
-        if parent[v] is None:
-            parent[v] = s
-            dfs(Adj,v,parent,order)
-    order.append(s)
-
-    return parent, order
-
-
-def full_dfs(Adj):
-    parent = [None] * len(Adj)
-    order = []
-    for u in range(len(Adj)):
-        if parent[u] is None:
-            parent[u] = u
-            dfs(Adj,u,parent,order)
-    return parent, order
+def bfs(Adj: list[int], s: int) -> list[int | None]:
+    parent: list[int:None] = [None for _ in Adj]
+    parent[s] = s
+    level = [[s]]
+    while 0 < len(level[-1]):
+        level.append([])
+        for u in level[-2]:  # 0
+            for v in Adj[u]:  # Adj[0] => 1
+                if parent[v] is None:  # parent[1] is None
+                    parent[v] = u  # parent[1] -> 0
+                    level[-1].append(v)  #
+    return parent
 
 
-print(f"{dfs(test_graph,0)=}")
-print(f"{full_dfs(test_graph)=}")
 
+
+def unweighted_shortest_path(Adj: list[int], s: int, t: int) -> list[int | None] | None:
+    parent = bfs(Adj, s)
+    if parent[t] is None:
+        return None
+    cur = t
+    path=[t]
+    while cur!=s:
+        cur = parent[cur]
+        path.append(cur)
+
+    return path[::-1]
+
+print(f"{bfs(test_graph,0)=}")
+print(f"{unweighted_shortest_path(test_graph,0,5)}")
 
 G.visualize()
